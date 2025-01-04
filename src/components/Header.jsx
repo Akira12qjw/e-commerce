@@ -40,6 +40,7 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
   const [collections, setCollections] = useState([]);
   const [cartNumber, setCartNumber] = useState(0);
   const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const getCategories = async () => {
     return axios
       .get("http://localhost:8080/api/products/categories")
@@ -103,6 +104,17 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
       });
   };
 
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/product?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
   const RenderSideButton = () => {
     return (
       <React.Fragment>
@@ -160,81 +172,6 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
         >
           SẢN PHẨM
         </Typography>
-        {/* <Accordion sx={{ px: "10px", py: "5px" }}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                cursor: "pointer",
-                "&:hover": {
-                  color: "#4bc1f4",
-                },
-              }}
-            >
-              PHÂN LOẠI
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {categories.map((text, index) => (
-              <Typography
-                onClick={() => handleCategories(text.ID)}
-                key={index}
-                sx={{
-                  p: "10px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "#4bc1f4",
-                  },
-                }}
-              >
-                {text}
-              </Typography>
-            ))}
-          </AccordionDetails>
-        </Accordion> */}
-        {/* <Accordion sx={{ px: "10px", py: "5px" }}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                cursor: "pointer",
-                "&:hover": {
-                  color: "#4bc1f4",
-                },
-              }}
-            >
-              Yêu thích
-            </Typography>
-          </AccordionSummary> */}
-        {/* <AccordionDetails>
-            {collections.map((text, index) => (
-              <Typography
-                onClick={() => {
-                  navigate("/product");
-                  setOpenDrawer(false);
-                }}
-                key={index}
-                sx={{
-                  p: "10px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "#4bc1f4",
-                  },
-                }}
-              >
-                {text}
-              </Typography>
-            ))}
-          </AccordionDetails>
-        </Accordion> */}
       </React.Fragment>
     );
   };
@@ -256,7 +193,7 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
             sx={{
               flexGrow: 1,
               ml: 10,
-              fontSize: 40,
+              fontSize: 30,
               color: "#000",
               fontStyle: "italic",
               fontWeight: 800,
@@ -270,8 +207,11 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
           {sessionStorage.getItem("user") && (
             <TextField
               id="search"
-              placeholder="Search for products, brands and more"
+              placeholder="Tìm kiếm sản phẩm"
               type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
               variant="outlined"
               InputProps={{
                 startAdornment: (
@@ -298,6 +238,7 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
                 disableFocusRipple
                 disableRipple
                 className="header_search-btn header_user-btn"
+                onClick={handleSearch}
                 sx={{
                   color: "#000",
                   pr: 3.5,

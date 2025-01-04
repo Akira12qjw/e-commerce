@@ -53,10 +53,17 @@ export const ProductPage = () => {
     setOpen(false);
   };
   useEffect(() => {
-    getProducts().then((data) => setProducts(data));
+    const searchParams = new URLSearchParams(window.location.search);
+    const query = searchParams.get("search");
+
+    if (query) {
+      getSearchResults(query).then((data) => setProducts(data));
+    } else {
+      getProducts().then((data) => setProducts(data));
+    }
     getCategories().then((data) => setCategories(data));
     getCollections().then((data) => setCollections(data));
-  }, []);
+  }, [window.location.search]);
 
   const getProducts = async () => {
     return axios
@@ -78,11 +85,7 @@ export const ProductPage = () => {
       .get(`http://localhost:8080/api/products/filter_categories?id=${id}`)
       .then((res) => res.data);
   };
-  const getCollectionId = async (id) => {
-    return axios
-      .get(`http://localhost:8080/api/products/filter_collection?id=${id}`)
-      .then((res) => res.data);
-  };
+
   const handleCategories = (id) => {
     getCategoriesId(id)
       .then((data) => setProducts(data))
@@ -91,14 +94,7 @@ export const ProductPage = () => {
         setOpen(true);
       });
   };
-  const handleCollection = (id) => {
-    getCollectionId(id)
-      .then((data) => setProducts(data))
-      .catch((err) => {
-        setProducts([]);
-        setOpen(true);
-      });
-  };
+
   const handleFilter = () => {
     if (price == 0 && size != "") {
       axios
@@ -130,6 +126,20 @@ export const ProductPage = () => {
           setOpen(true);
         });
     }
+  };
+
+  const getSearchResults = async (query) => {
+    return axios
+      .get(
+        `http://localhost:8080/api/products/search?query=${encodeURIComponent(
+          query
+        )}`
+      )
+      .then((res) => res.data)
+      .catch((err) => {
+        setProducts([]);
+        setOpen(true);
+      });
   };
   const navigate = useNavigate();
   const handleSize = (e) => {
@@ -203,34 +213,7 @@ export const ProductPage = () => {
           </AccordionDetails>
         </Accordion>
         <Divider />
-        <Accordion elevation={0} defaultExpanded={true}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Collections</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="Blue"
-              name="radio-buttons-group"
-            >
-              {collections.map((colection, index) => (
-                <FormControlLabel
-                  key={colection.ID}
-                  value={colection.ID}
-                  label={colection.NAME}
-                  control={
-                    <Link
-                      component="button"
-                      sx={{ ml: 2, mb: 5 }}
-                      onClick={() => handleCollection(colection.ID)}
-                    />
-                  }
-                />
-              ))}
-            </RadioGroup>
-          </AccordionDetails>
-        </Accordion>
-        <Divider />
+
         <Accordion elevation={0} defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Size</Typography>

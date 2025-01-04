@@ -139,7 +139,7 @@ export const HomePage = ({ setLoggedIn }) => {
       },
       {
         id: 6,
-        logo: "https://images.seeklogo.com/logo-png/5/2/garmin-logo-png_seeklogo-59292.png?v=1958567721150276360",
+        logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMIH2L9bALTUz2JWYz6P9HCfRcpH9k-m-TcA&s",
       },
       {
         id: 7,
