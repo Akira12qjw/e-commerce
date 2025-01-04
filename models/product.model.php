@@ -255,4 +255,33 @@ class Product
             throw new InternalServerError('Server Error !');
         }
     }
+
+    public function search($searchTerm)
+    {
+        try {
+            $query = "SELECT * FROM product 
+                     WHERE NAME LIKE ? 
+                     OR CODE LIKE ? 
+                     OR DESCRIPTION LIKE ? 
+                     OR THUONGHIEU LIKE ?
+                     ORDER BY CATEGORY_ID DESC 
+                     LIMIT 25";
+
+            $searchPattern = "%{$searchTerm}%";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param(
+                "ssss",
+                $searchPattern,
+                $searchPattern,
+                $searchPattern,
+                $searchPattern
+            );
+
+            $stmt->execute();
+            return $stmt->get_result();
+        } catch (mysqli_sql_exception $e) {
+            throw new InternalServerError('Server Error !');
+        }
+    }
 }

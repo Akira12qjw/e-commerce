@@ -151,4 +151,21 @@ class ProductController
         }
         throw new FileNotFoundError("Product not found !");
     }
+
+    public static function searchProducts($searchTerm)
+    {
+        try {
+            $temp = new Product();
+            $results = $temp->search($searchTerm);
+
+            if ($results->num_rows > 0) {
+                $rows = $results->fetch_all(MYSQLI_ASSOC);
+                return json_encode($rows);
+            }
+
+            return json_encode([]);
+        } catch (Exception $e) {
+            throw new CustomError("Lỗi tìm kiếm sản phẩm: " . $e->getMessage());
+        }
+    }
 }

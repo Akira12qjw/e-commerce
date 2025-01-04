@@ -159,4 +159,16 @@ elseif ($url['3'] == 'chart' and $method == 'GET') {
         echo json_encode(['msg' => $e->getMessage()]);
         http_response_code($e->getStatusCode());
     }
+} elseif ($url['3'] == 'search' && $method == 'GET') {
+    try {
+        // Lấy tham số tìm kiếm từ URL
+        $searchTerm = isset($params['query']) ? $params['query'] : '';
+
+        // Gọi controller để xử lý
+        echo ProductController::searchProducts($searchTerm);
+        http_response_code(200);
+    } catch (CustomError $e) {
+        echo json_encode(['msg' => $e->getMessage()]);
+        http_response_code($e->getStatusCode());
+    }
 }
