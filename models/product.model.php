@@ -153,7 +153,6 @@ class Product
             $PRICE = $data['PRICE'];
             $SALE = $data['SALE'];
             $THUONGHIEU = $data['THUONGHIEU'];
-
             $DESCRIPTION = $data['DESCRIPTION'];
             $IMG = $data['IMG'];
 

@@ -42,8 +42,17 @@ if (array_key_exists('3', $url)) {
     }
   } else if ($url['3'] == 'detailuser' and $method == 'GET') {
     try {
-      echo UserController::getOneUser($params['username']);
+      echo UserController::getOneUser($params['id']);
       http_response_code((200));
+    } catch (CustomError $e) {
+      echo json_encode(['msg' => $e->getMessage()]);
+      http_response_code($e->getStatusCode());
+    }
+  } elseif ($url['3'] == 'edit' and $method == 'POST') {
+    try {
+      $data = (array) json_decode(file_get_contents('php://input'));
+      echo UserController::edit($data);
+      http_response_code(200);
     } catch (CustomError $e) {
       echo json_encode(['msg' => $e->getMessage()]);
       http_response_code($e->getStatusCode());

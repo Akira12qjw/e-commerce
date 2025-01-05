@@ -37,6 +37,19 @@ class User
       throw new InternalServerError('Server Error !');
     }
   }
+  public function getUserByID($id)
+  {
+    try {
+      $username = mysqli_real_escape_string($this->conn, $id);
+      $query = "SELECT `CustomerID`, `Phone_Number`, `USERNAME`, `PASSWORD`, `NAME`, `BIRTHDAY`, `AVATAR`, `ROLE` FROM Customer WHERE CustomerID = '$id'";
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+      return $stmt->get_result();
+    } catch (mysqli_sql_exception $e) {
+      echo $this->conn->error;
+      throw new InternalServerError('Server Error !');
+    }
+  }
   public function createUser($username, $password, $name, $phone, $birthday, $avatar, $role)
   {
     try {
@@ -53,6 +66,31 @@ class User
       return $stmt->execute();
     } catch (mysqli_sql_exception $e) {
       echo $this->conn->error;
+      throw new InternalServerError('Server Error !');
+    }
+  }
+
+  public function edit($data)
+  {
+    try {
+      $ID = $data['ID'];
+      $USERNAME = mysqli_real_escape_string($this->conn, $data['USERNAME']);
+      $NAME = mysqli_real_escape_string($this->conn, $data['NAME']);
+      $PHONE = mysqli_real_escape_string($this->conn, $data['PHONE']);
+      $BIRTHDAY = mysqli_real_escape_string($this->conn, $data['BIRTHDAY']);
+      $AVATAR = mysqli_real_escape_string($this->conn, $data['AVATAR']);
+
+      $query = "UPDATE customer SET 
+              USERNAME='$USERNAME',
+              NAME='$NAME',
+              Phone_Number='$PHONE',
+              BIRTHDAY='$BIRTHDAY',
+              AVATAR='$AVATAR'
+              WHERE CustomerID='$ID'";
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
       throw new InternalServerError('Server Error !');
     }
   }

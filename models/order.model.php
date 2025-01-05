@@ -26,7 +26,7 @@ class Order
     public function getOrder($id)
     { // id of 1 order
         try {
-            $query = "SELECT OrderID, CustomerID, orders.NAME ,TOTAL_PRODUCT, TOTAL_COST, PAY_METHOD, RECEIVE_PHONE, RECEIVE_ADDRESS, DATE_TIME, CODE, T.COLOR, T.SIZE, PRICE, SALEOFF ,NUMBER, IMG1
+            $query = "SELECT OrderID, CustomerID, orders.NAME ,TOTAL_PRODUCT, TOTAL_COST, PAY_METHOD, RECEIVE_PHONE, RECEIVE_ADDRESS, STATUS, DATE_TIME, CODE, T.COLOR, T.SIZE, PRICE, SALEOFF ,NUMBER, IMG1
             FROM orders NATURAL JOIN include  AS T JOIN Product AS P ON T.ProductID=P.CODE AND T.COLOR=P.COLOR AND T.SIZE = P.SIZE 
             WHERE orders.OrderID='$id';";
             $stmt = $this->conn->prepare($query);
