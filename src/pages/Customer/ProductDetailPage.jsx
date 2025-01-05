@@ -208,11 +208,11 @@ export const ProductDetailPage = () => {
             {item.NAME}
           </Typography>
           <Stack direction="row" display="flex" justifyContent="space-between">
-            <Typography variant="h6" component="div">
-              ${item.PRICE}
+            <Typography variant="h6" sx={{ fontSize: 15 }} component="div">
+              {item.PRICE.toLocaleString("vi-VN")} VND
             </Typography>
             <Typography variant="h6" component="div">
-              ${item.PRICE * 1.2}
+              {(item.PRICE * 1.2).toLocaleString("vi-VN")} VND
             </Typography>
             <Rating size="small"></Rating>
           </Stack>
@@ -220,143 +220,6 @@ export const ProductDetailPage = () => {
       </Card>
     ));
     return data;
-  };
-
-  const RenderSellerComment = () => {
-    return (
-      <Stack className="seller_comment">
-        <Stack>
-          <Typography>Seller</Typography>
-          <Typography>6 days ago</Typography>
-        </Stack>
-        <Typography className="product_comment">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate
-          aliquid dolor iusto ullam qui ipsa ducimus neque, nobis eos hic amet
-          labore eligendi error voluptatibus quidem tempore odit temporibus
-          harum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-          optio, natus aliquid minima blanditiis officia magnam omnis nihil ea
-          quibusdam accusamus placeat distinctio reiciendis ex necessitatibus
-          molestias fuga mollitia eos!
-        </Typography>
-      </Stack>
-    );
-  };
-
-  const RenderAllComment = () => {
-    let list = [];
-    for (let i = 0; i < 5; i++) {
-      list.push(
-        <Stack
-          className={
-            "product-detail_comment-element " +
-            (i === 4 && "remove-border-bottom")
-          }
-        >
-          <Stack>
-            <Typography>John Deo</Typography>
-            <Typography>6 days ago</Typography>
-          </Stack>
-          <Typography className="product_comment">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate
-            aliquid dolor iusto ullam qui ipsa ducimus neque, nobis eos hic amet
-            labore eligendi error voluptatibus quidem tempore odit temporibus
-            harum!
-          </Typography>
-          {i % 2 === 0 && <RenderSellerComment />}
-        </Stack>
-      );
-    }
-    return list;
-  };
-
-  const RenderQuestion = () => {
-    return (
-      <Stack className="product-detail_comment-content">
-        <Stack direction="row">
-          <TextField id="standard-name" placeholder="Ask seller a question" />
-          <Button
-            variant="contained"
-            disableElevation
-            sx={{ maxHeight: "56px" }}
-          >
-            Ask Question
-          </Button>
-        </Stack>
-        <RenderAllComment />
-        <Button variant="contained" disableElevation>
-          Load More Question
-        </Button>
-      </Stack>
-    );
-  };
-
-  const RenderRating = () => {
-    return (
-      <Stack className="product-detail_comment-content">
-        <Stack className="product-detail_comment-content-description">
-          <Typography>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
-            cumque dolores harum temporibus accusantium est, quisquam, molestiae
-            exercitationem non nam sapiente laboriosam nemo repudiandae?
-            Recusandae cupiditate unde suscipit exercitationem possimus.
-          </Typography>
-          <Typography>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
-            cumque dolores harum temporibus accusantium est, quisquam, molestiae
-            exercitationem non nam sapiente laboriosam nemo repudiandae?
-            Recusandae cupiditate unde suscipit exercitationem possimus.
-          </Typography>
-          <Typography>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-            doloribus distinctio optio.
-          </Typography>
-          <List>
-            {[1, 2, 3].map((value) => (
-              <ListItem key={value} disableGutters>
-                <ListItemIcon>
-                  <CircleIcon />
-                </ListItemIcon>
-                <ListItemText primary={`Line item ${value}`} />
-              </ListItem>
-            ))}
-          </List>
-          <Typography>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
-            cumque dolores harum temporibus accusantium est, quisquam, molestiae
-            exercitationem non nam sapiente laboriosam nemo repudiandae?
-            Recusandae cupiditate unde suscipit exercitationem possimus. Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Natus iste iusto
-            facilis assumenda asperiores ducimus ea officia. Eius, temporibus
-            dicta esse libero accusantium error nam itaque eos, quam enim
-            maxime! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem aliquid eaque molestiae eius ducimus totam incidunt
-            illum commodi ea. Itaque cupiditate tempora aspernatur
-            exercitationem hic corrupti quibusdam aperiam facilis assumenda.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            ratione laborum nulla nostrum, itaque cum architecto nemo saepe
-            obcaecati vel quae aliquid facere ducimus quod temporibus ut magni
-            ullam dignissimos!
-          </Typography>
-          <Typography>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
-            cumque dolores harum temporibus accusantium est, quisquam, molestiae
-            exercitationem non nam sapiente laboriosam nemo repudiandae?
-            Recusandae cupiditate unde suscipit exercitationem possimus. Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Natus iste iusto
-            facilis assumenda asperiores ducimus ea officia. Eius, temporibus
-            dicta esse libero accusantium error nam itaque eos, quam enim
-            maxime! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem aliquid eaque molestiae eius ducimus totam incidunt
-            illum commodi ea. Itaque cupiditate tempora aspernatur
-            exercitationem hic corrupti quibusdam aperiam facilis assumenda.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            ratione laborum nulla nostrum, itaque cum architecto nemo saepe
-            obcaecati vel quae aliquid facere ducimus quod temporibus ut magni
-            ullam dignissimos!
-          </Typography>
-        </Stack>
-      </Stack>
-    );
   };
 
   const RenderDescription = () => {
@@ -414,10 +277,10 @@ export const ProductDetailPage = () => {
                   </Stack>
                   <Stack direction="row">
                     <Typography variant="h6" component="div">
-                      ${products[0].PRICE}
+                      {products[0].PRICE.toLocaleString("vi-VN")} VND
                     </Typography>
                     <Typography variant="h6" component="div">
-                      ${products[0].PRICE * 1.2}
+                      {(products[0].PRICE * 1.2).toLocaleString("vi-VN")} VND
                     </Typography>
                   </Stack>
                   <Stack>
@@ -502,17 +365,14 @@ export const ProductDetailPage = () => {
                   </Stack>
                   <Stack direction="row">
                     <Button onClick={() => handleClickAdd()}>
-                      Add to Cart
+                      Thêm vào giỏ hàng
                     </Button>
-                    <Button onClick={() => handleClickAdd()}>Buy Now</Button>
-                    {/* <IconButton aria-label="delete">
-                      <FavoriteIcon />
-                    </IconButton> */}
+                    <Button onClick={() => handleClickAdd()}>Mua ngay</Button>
                   </Stack>
                   <Stack direction="column">
                     <Box>
                       <Typography variant="h6" component="div">
-                        Product Code: &nbsp;
+                        Mã sản phẩm: &nbsp;
                       </Typography>
                       <Typography variant="h6" component="div">
                         #20344690
@@ -522,9 +382,10 @@ export const ProductDetailPage = () => {
                       <LocalShippingOutlinedIcon />
                       &nbsp;
                       <Typography variant="h6" component="div">
-                        FREE delivery Friday, 14 October on first order.
+                        Giao hàng MIỄN PHÍ vào thứ Sáu, ngày 10 tháng 1 cho đơn
+                        hàng đầu tiên.
                         <Typography variant="h6" component="span">
-                          Details
+                          Chi tiết
                         </Typography>
                       </Typography>
                     </Box>
@@ -532,10 +393,10 @@ export const ProductDetailPage = () => {
                       <UpdateOutlinedIcon />
                       &nbsp;
                       <Typography variant="h6" component="div">
-                        Delivers in: 3-7 Working Days. &nbsp;
+                        Giao hàng trong vòng: 3-7 ngày làm việc. &nbsp;
                       </Typography>
                       <Typography variant="h6" component="div">
-                        Learn More
+                        Xem thêm
                       </Typography>
                     </Box>
                   </Stack>
@@ -550,29 +411,13 @@ export const ProductDetailPage = () => {
                 onClick={() => setTab(0)}
                 disableRipple
               >
-                Product Description
-              </Button>
-              <Button
-                className={tab === 1 && "border_bottom"}
-                onClick={() => setTab(1)}
-                disableRipple
-              >
-                Rating & Reviews
-              </Button>
-              <Button
-                className={tab === 2 && "border_bottom"}
-                onClick={() => setTab(2)}
-                disableRipple
-              >
-                Questions
+                Chi tiết sản phẩm
               </Button>
             </Stack>
             {tab === 0 && <RenderDescription />}
-            {tab === 1 && <RenderRating />}
-            {tab === 2 && <RenderQuestion />}
             <Stack className="product-detail_recommend">
               <Typography gutterBottom variant="h6" component="div">
-                Silimar Items You Might Like
+                Các mặt hàng tương tự bạn có thể thích
               </Typography>
               <Stack>
                 <RenderBestSeller />
@@ -589,7 +434,7 @@ export const ProductDetailPage = () => {
                 severity="warning"
                 sx={{ width: "100%" }}
               >
-                Please Login!!!
+                Vui lòng đăng nhập!!!
               </Alert>
             </Snackbar>
           </Box>

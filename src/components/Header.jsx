@@ -204,30 +204,30 @@ export const Header = ({ loggedIn, setLoggedIn }) => {
           >
             SHOPIFY
           </Typography>
-          {sessionStorage.getItem("user") && (
-            <TextField
-              id="search"
-              placeholder="Tìm kiếm sản phẩm"
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchOutlinedIcon />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                width: "30%",
-                backgroundColor: "#f6f6f6",
-                mr: 2,
-              }}
-              className="header_search-field"
-            />
-          )}
+
+          <TextField
+            id="search"
+            placeholder="Tìm kiếm sản phẩm"
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleKeyPress}
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchOutlinedIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              width: "30%",
+              backgroundColor: "#f6f6f6",
+              mr: 2,
+            }}
+            className="header_search-field"
+          />
+
           {sessionStorage.getItem("user") && (
             <Stack
               className="header_user-icons"

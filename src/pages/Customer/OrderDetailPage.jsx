@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Link,
@@ -7,25 +7,26 @@ import {
   Stack,
   Typography,
   CardMedia,
-} from '@mui/material';
-import Button from '@mui/material/Button';
+} from "@mui/material";
+import Button from "@mui/material/Button";
 import {
   Timeline,
   TimelineItem,
   TimelineConnector,
   TimelineSeparator,
   TimelineDot,
-} from '@mui/lab';
-import './../../styles/OrderDetailPage.css';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+} from "@mui/lab";
+import "./../../styles/OrderDetailPage.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const OrderDetailPage = () => {
   const params = new URLSearchParams(document.location.search);
-  const orderID = params.get('orderID');
+  const orderID = params.get("orderID");
   const [orders, setOrders] = useState([]);
-  const [dateTime, setDateTime] = useState('');
-  const [totalCost, setTotalCost] = useState('');
+  const [dateTime, setDateTime] = useState("");
+  const [totalCost, setTotalCost] = useState("");
+
   useEffect(() => {
     getOrders().then((data) => {
       setOrders(data);
@@ -41,24 +42,21 @@ export const OrderDetailPage = () => {
   const RenderItems = () => {
     const data = orders.map((order, index) => (
       <Stack direction="row" className="timeline-item" id={index}>
-        <Stack direction='row'>
+        <Stack direction="row">
           <CardMedia
             component="img"
             image={order.IMG1}
             alt="unsplash img"
-            style={{ objectFit: 'contain', backgroundColor: '#e3e3e3' }}
+            style={{ objectFit: "contain", backgroundColor: "#e3e3e3" }}
           />
           <Stack>
-            <Typography style={{ width: '100%', margin: 0 }}>
+            <Typography style={{ width: "100%", margin: 0 }}>
               CODE: {order.CODE}
             </Typography>
-            <Typography style={{ width: '100%', margin: 0 }}>
-              <b>Màu sắc:</b> {order.COLOR}
-            </Typography>
-            <Typography style={{ width: '100%', margin: 0 }}>
+            <Typography style={{ width: "100%", margin: 0 }}>
               <b>Kích cỡ:</b> {order.SIZE}
             </Typography>
-            <Typography style={{ width: '100%', margin: 0, fontSize: 16 }}>
+            <Typography style={{ width: "100%", margin: 0, fontSize: 16 }}>
               <b>Giảm giá:</b> {order.SALEOFF}
             </Typography>
           </Stack>
@@ -68,11 +66,11 @@ export const OrderDetailPage = () => {
         </Typography>
         <Typography>
           <b>
-            Giá:{' '}
-            <b style={{ fontWeight: 'bold' }}>
-              ${Math.round(order.PRICE * (1 - order.SALEOFF))}{' '}
-              <b style={{ color: 'red', textDecoration: 'line-through' }}>
-                ${order.PRICE}
+            Giá:{" "}
+            <b style={{ fontWeight: "bold" }}>
+              {Math.round(order.PRICE * (1 - order.SALEOFF))} VND
+              <b style={{ color: "red", textDecoration: "line-through" }}>
+                {order.PRICE} VND
               </b>
             </b>
           </b>
@@ -82,6 +80,7 @@ export const OrderDetailPage = () => {
     return data;
   };
   const navigate = useNavigate();
+
   return (
     <React.Fragment>
       <Box className="order-status_container">
@@ -96,18 +95,19 @@ export const OrderDetailPage = () => {
           <Stack className="order-status_content">
             <Box
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
+                display: "flex",
+                justifyContent: "space-between",
                 marginBottom: 20,
-              }}>
-              <Typography style={{ fontSize: 30, fontWeight: 'bold' }}>
+              }}
+            >
+              <Typography style={{ fontSize: 30, fontWeight: "bold" }}>
                 Order Details
               </Typography>
               <Button
                 variant="contained"
                 size="large"
-                style={{ backgroundColor: 'black' }}
-                onClick={() => navigate('/order')}
+                style={{ backgroundColor: "black" }}
+                onClick={() => navigate("/order")}
               >
                 History
               </Button>
@@ -119,41 +119,40 @@ export const OrderDetailPage = () => {
               </Stack>
               <Stack>
                 <Typography>
-                  Total: <b>$ {totalCost} </b>
+                  Total: <b>{totalCost} VND</b>
                 </Typography>
               </Stack>
             </Stack>
             <Stack className="order-status_timeline-ctn">
               <Timeline className="order-status_timeline">
                 <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <span className="timeline-content">Giao thành công</span>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <span className="timeline-content">Đang giao hàng</span>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot className="checked-timeline" />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <span className="timeline-content">Xác nhận đơn hàng</span>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                  </TimelineSeparator>
+                  {orders.map((order, index) => (
+                    <TimelineSeparator key={index}>
+                      {order.STATUS == 1 ? (
+                        <TimelineDot className="checked-timeline" />
+                      ) : (
+                        <TimelineDot />
+                      )}
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                  ))}
                   <span className="timeline-content">Đặt thành công</span>
+                </TimelineItem>
+                <TimelineItem>
+                  {orders.map((order, index) => (
+                    <TimelineSeparator key={index}>
+                      {order.STATUS == 0 ? (
+                        <TimelineDot className="checked-timeline" />
+                      ) : (
+                        <TimelineDot />
+                      )}
+                    </TimelineSeparator>
+                  ))}
+                  <span className="timeline-content">Đang tiến hành</span>
                 </TimelineItem>
               </Timeline>
             </Stack>
+
             <Stack className="timeline-items">
               <RenderItems />
             </Stack>

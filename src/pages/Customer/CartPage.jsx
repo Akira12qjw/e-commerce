@@ -1,17 +1,17 @@
-import styled from 'styled-components';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ProductItem } from '../../components/ProductItem';
-import axios from 'axios';
-import { Box, Typography, Grid } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import '../../styles/CartPage.css';
+import styled from "styled-components";
+import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ProductItem } from "../../components/ProductItem";
+import axios from "axios";
+import { Box, Typography, Grid } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import "../../styles/CartPage.css";
 
 const Container = styled.div``;
 
@@ -57,8 +57,8 @@ const SummaryItem = styled.div`
   margin: 30px 0px;
   display: flex;
   justify-content: space-between;
-  font-weight: ${(props) => props.type === 'total' && '500'};
-  font-size: ${(props) => props.type === 'total' && '24px'};
+  font-weight: ${(props) => props.type === "total" && "500"};
+  font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
 const SummaryItemText = styled.span``;
@@ -68,29 +68,29 @@ const SummaryItemPrice = styled.span``;
 const PaymentForm = ({ cost, totalProduct }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [payment, setPayment] = useState('cash');
-  const [note, setNote] = useState('');
-  const [phone, setPhone] = useState('');
-  const [add, setAdd] = useState('');
-  const customerID = sessionStorage.getItem('user')
-    ? JSON.parse(sessionStorage.getItem('user')).id
-    : '0';
+  const [name, setName] = useState("");
+  const [payment, setPayment] = useState("cash");
+  const [note, setNote] = useState("");
+  const [phone, setPhone] = useState("");
+  const [add, setAdd] = useState("");
+  const customerID = sessionStorage.getItem("user")
+    ? JSON.parse(sessionStorage.getItem("user")).id
+    : "0";
 
   const handleConfirmPayment = () => {
-    let customerName = '';
-    if (sessionStorage.getItem('user')) {
-      customerName = JSON.parse(sessionStorage.getItem('user')).name;
+    let customerName = "";
+    if (sessionStorage.getItem("user")) {
+      customerName = JSON.parse(sessionStorage.getItem("user")).name;
     } else {
       return;
     }
-    if (name == '' || phone == '' || add == '') {
+    if (name == "" || phone == "" || add == "") {
       setOpen(true);
       return;
     }
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/api/orders/add',
+      method: "post",
+      url: "http://localhost:8080/api/orders/add",
       data: {
         CUSTOMER: customerID,
         NAME: name,
@@ -103,16 +103,16 @@ const PaymentForm = ({ cost, totalProduct }) => {
       },
     })
       .then((res) => {
-        console.log('Success');
-        navigate('/order');
+        console.log("Success");
+        navigate("/order");
       })
       .catch((res) => {
-        console.log('Error');
+        console.log("Error");
         console.log(res);
       });
   };
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
@@ -121,23 +121,26 @@ const PaymentForm = ({ cost, totalProduct }) => {
     <React.Fragment>
       <Box
         style={{
-          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+          boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: 5,
           // height: '65vh',
-        }}>
+        }}
+      >
         <Box>
           <Typography
             style={{
-              textAlign: 'center',
+              textAlign: "center",
               padding: 10,
               fontSize: 30,
-              fontWeight: 'bold',
-            }}>
+              fontWeight: "bold",
+            }}
+          >
             Thanh toán
           </Typography>
           <Box
-            style={{ width: '80%', margin: '20px auto' }}
-            className="cart-page_textfield-ctn">
+            style={{ width: "80%", margin: "20px auto" }}
+            className="cart-page_textfield-ctn"
+          >
             <TextField
               id="outlined-basic"
               label="Họ tên"
@@ -145,7 +148,7 @@ const PaymentForm = ({ cost, totalProduct }) => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: '100%', marginBottom: 20 }}
+              style={{ width: "100%", marginBottom: 20 }}
             />
             <TextField
               id="outlined-basic"
@@ -154,7 +157,7 @@ const PaymentForm = ({ cost, totalProduct }) => {
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              style={{ width: '100%', marginBottom: 20 }}
+              style={{ width: "100%", marginBottom: 20 }}
             />
             <TextField
               id="outlined-basic"
@@ -163,23 +166,24 @@ const PaymentForm = ({ cost, totalProduct }) => {
               required
               value={add}
               onChange={(e) => setAdd(e.target.value)}
-              style={{ width: '100%', marginBottom: 20 }}
+              style={{ width: "100%", marginBottom: 20 }}
             />
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={payment}
               label="Payment"
-              style={{ width: '100%', marginBottom: 20 }}
-              onChange={(e) => setPayment(e.target.value)}>
-              <MenuItem value={'cash'}>Cash</MenuItem>
-              <MenuItem value={'momo'}>Momo</MenuItem>
+              style={{ width: "100%", marginBottom: 20 }}
+              onChange={(e) => setPayment(e.target.value)}
+            >
+              <MenuItem value={"cash"}>Cash</MenuItem>
+              <MenuItem value={"momo"}>Momo</MenuItem>
             </Select>
             <TextField
               id="outlined-basic"
               label="Ghi chú"
               variant="outlined"
-              style={{ width: '100%', marginBottom: 20 }}
+              style={{ width: "100%", marginBottom: 20 }}
               value={note}
               onChange={(e) => setNote(e.target.value)}
             />
@@ -187,18 +191,21 @@ const PaymentForm = ({ cost, totalProduct }) => {
               variant="contained"
               size="large"
               onClick={() => handleConfirmPayment()}
-              style={{ width: '100%', marginBottom: 30 }}>
+              style={{ width: "100%", marginBottom: 30 }}
+            >
               Xác nhận thanh toán
             </Button>
             <Snackbar
               open={open}
               autoHideDuration={6000}
               onClose={handleClose}
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            >
               <Alert
                 onClose={handleClose}
                 severity="error"
-                sx={{ width: '100%' }}>
+                sx={{ width: "100%" }}
+              >
                 Vui lòng nhập đầy đủ thông tin!!
               </Alert>
             </Snackbar>
@@ -212,9 +219,9 @@ const PaymentForm = ({ cost, totalProduct }) => {
 const CartPage = () => {
   const [productData, setProductData] = useState([]);
   const [bill, setBill] = useState([]);
-  const customerID = sessionStorage.getItem('user')
-    ? JSON.parse(sessionStorage.getItem('user')).id
-    : '0';
+  const customerID = sessionStorage.getItem("user")
+    ? JSON.parse(sessionStorage.getItem("user")).id
+    : "0";
   useEffect(() => {
     getCarts()
       .then((data) => {
@@ -227,7 +234,7 @@ const CartPage = () => {
   useEffect(() => {
     getBill()
       .then((data) => {
-        setBill([data[0]['TOTAL_COST'], data[0]['SUM(NUMBER)']]);
+        setBill([data[0]["TOTAL_COST"], data[0]["SUM(NUMBER)"]]);
       })
       .catch((err) => {
         setBill([]);
@@ -249,14 +256,15 @@ const CartPage = () => {
   return (
     <Container style={{ marginTop: 180 }} className="cart-page_wrapper">
       <Wrapper>
-        <Title style={{ fontSize: 30, fontWeight: 'bold' }}>
+        <Title style={{ fontSize: 30, fontWeight: "bold" }}>
           ĐƠN HÀNG CỦA TÔI
         </Title>
         {!productData && <div></div>}
         {productData && (
           <Bottom
-            style={{ width: '80%', margin: '50px auto' }}
-            className="cart-page_ctn">
+            style={{ width: "80%", margin: "50px auto" }}
+            className="cart-page_ctn"
+          >
             <Info>
               {productData &&
                 productData.map((product) => (
@@ -265,7 +273,6 @@ const CartPage = () => {
                     thumbNail={product.IMG1}
                     title={product.NAME}
                     size={product.SIZE}
-                    color={product.COLOR}
                     saleOff={product.SALEOFF}
                     quantity={product.NUMBER}
                     price={product.PRICE}
@@ -275,32 +282,39 @@ const CartPage = () => {
             {!productData && <div></div>}
             {productData && bill.length > 0 && (
               <Box
-                sx={{ width: '40%', margin: '0 auto', minWidth: '350px' }}
-                className="cart-page_summary">
+                sx={{ width: "40%", margin: "0 auto", minWidth: "350px" }}
+                className="cart-page_summary"
+              >
                 <Summary>
-                  <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                  <SummaryTitle>Thông tin đơn hàng</SummaryTitle>
                   <SummaryItem>
-                    <SummaryItemText>Total</SummaryItemText>
+                    <SummaryItemText>Tổng</SummaryItemText>
                     <SummaryItemPrice>
-                      ${' '}
-                      {bill.length > 0 && productData ? Math.round(bill[0]) : 0}
+                      {" "}
+                      {bill.length > 0 && productData
+                        ? Math.round(bill[0])
+                        : 0}{" "}
+                      VND
                     </SummaryItemPrice>
                   </SummaryItem>
                   <SummaryItem>
-                    <SummaryItemText>Estimated Shipping</SummaryItemText>
-                    <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                    <SummaryItemText>Vận chuyển ước tính</SummaryItemText>
+                    <SummaryItemPrice>5.900 VND</SummaryItemPrice>
                   </SummaryItem>
                   <SummaryItem>
-                    <SummaryItemText>Shipping Discount</SummaryItemText>
-                    <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+                    <SummaryItemText>Giảm giá vận chuyển</SummaryItemText>
+                    <SummaryItemPrice>-5.900 VND</SummaryItemPrice>
                   </SummaryItem>
                   <SummaryItem type="total">
-                    <SummaryItemText style={{ fontWeight: 'bold' }}>
-                      Total
+                    <SummaryItemText style={{ fontWeight: "bold" }}>
+                      Tổng cộng
                     </SummaryItemText>
-                    <SummaryItemPrice style={{ fontWeight: 'bold' }}>
-                      ${' '}
-                      {bill.length > 0 && productData ? Math.round(bill[0]) : 0}
+                    <SummaryItemPrice style={{ fontWeight: "bold" }}>
+                      {" "}
+                      {bill.length > 0 && productData
+                        ? Math.round(bill[0])
+                        : 0}{" "}
+                      VND
                     </SummaryItemPrice>
                   </SummaryItem>
                 </Summary>

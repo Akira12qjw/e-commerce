@@ -1,14 +1,14 @@
-import { Typography, Stack } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import styled from 'styled-components';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveIcon from '@mui/icons-material/Remove';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './../styles/ProductItem.css';
+import { Typography, Stack } from "@mui/material";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import styled from "styled-components";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveIcon from "@mui/icons-material/Remove";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./../styles/ProductItem.css";
 
 const Product = styled.div`
   display: flex;
@@ -51,13 +51,13 @@ const ProductSize = styled.span``;
 export const ProductItem = (props) => {
   const { thumbNail, title, id, size, color, quantity, price, saleOff } = props;
   const [quant, setQuant] = useState(quantity);
-  const customerID = JSON.parse(sessionStorage.getItem('user')).id;
+  const customerID = JSON.parse(sessionStorage.getItem("user")).id;
   const navigate = useNavigate();
   console.log(quant);
   const handleDelete = () => {
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/api/cart/deleteCart',
+      method: "post",
+      url: "http://localhost:8080/api/cart/deleteCart",
       data: {
         ProductID: id,
         COLOR: color,
@@ -66,18 +66,18 @@ export const ProductItem = (props) => {
       },
     })
       .then((res) => {
-        console.log('Success');
-        navigate('/cart');
+        console.log("Success");
+        navigate("/cart");
       })
       .catch((res) => {
-        console.log('Error');
+        console.log("Error");
         console.log(res);
       });
   };
   useEffect(() => {
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/api/cart/edit',
+      method: "post",
+      url: "http://localhost:8080/api/cart/edit",
       data: {
         ProductID: id,
         COLOR: color,
@@ -87,11 +87,11 @@ export const ProductItem = (props) => {
       },
     })
       .then((res) => {
-        console.log('Success');
+        console.log("Success");
         // navigate('/cart');
       })
       .catch((res) => {
-        console.log('Error');
+        console.log("Error");
         console.log(res);
       });
   }, [quant]);
@@ -109,12 +109,13 @@ export const ProductItem = (props) => {
     <Product
       style={{
         padding: 20,
-        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
         borderRadius: 5,
         marginRight: 20,
         marginBottom: 30,
       }}
-      className="product-item_ctn">
+      className="product-item_ctn"
+    >
       <ProductDetail className="product-item_detail">
         <Image src={thumbNail} className="product-item_image" />
         <Details className="product-item_detail-product">
@@ -124,10 +125,10 @@ export const ProductItem = (props) => {
           <ProductId>
             <b className="product-item_bold">Code:</b> {id}
           </ProductId>
-          <ProductId>
+          {/* <ProductId>
             <b className="product-item_bold">Màu sắc:</b>
             <ProductColor color={color} />
-          </ProductId>
+          </ProductId> */}
           <ProductSize>
             <b className="product-item_bold">Kích cỡ:</b> {size}
           </ProductSize>
@@ -135,15 +136,15 @@ export const ProductItem = (props) => {
             <b className="product-item_bold">Số lượng:</b> {quant}
           </ProductSize>
           <ProductSize>
-            <b className="product-item_bold">Giảm giá:</b>{' '}
+            <b className="product-item_bold">Giảm giá:</b>{" "}
             {Math.round(saleOff * 100)}%
           </ProductSize>
           <ProductSize>
             <b>
-              Giá:{' '}
-              <b style={{ fontWeight: 'bold' }}>
-                $ {Math.round(price * (1 - saleOff))}{' '}
-                <b style={{ color: 'red', textDecoration: 'line-through' }}>
+              Giá:{" "}
+              <b style={{ fontWeight: "bold" }}>
+                $ {Math.round(price * (1 - saleOff))}{" "}
+                <b style={{ color: "red", textDecoration: "line-through" }}>
                   $ {price}
                 </b>
               </b>
@@ -155,15 +156,17 @@ export const ProductItem = (props) => {
         <IconButton
           aria-label="remove"
           size="large"
-          onClick={() => handleEdit(1)}>
+          onClick={() => handleEdit(1)}
+        >
           <RemoveIcon fontSize="inherit" />
         </IconButton>
         <Typography
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           {quant}
         </Typography>
         <IconButton aria-label="add" size="large" onClick={() => handleEdit(0)}>
@@ -172,7 +175,8 @@ export const ProductItem = (props) => {
         <IconButton
           aria-label="delete"
           size="large"
-          onClick={() => handleDelete()}>
+          onClick={() => handleDelete()}
+        >
           <DeleteIcon fontSize="inherit" />
         </IconButton>
       </Stack>

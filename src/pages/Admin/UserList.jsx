@@ -1,13 +1,13 @@
-import '../../styles/UserList.css';
-import { DataGrid } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import "../../styles/UserList.css";
+import { DataGrid } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 export default function UserList() {
   const [user, setUsers] = useState([]);
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/users/all')
+      .get("http://localhost:8080/api/users/all")
       .then((result) => {
         console.log(result.data);
         setUsers(result.data);
@@ -16,10 +16,10 @@ export default function UserList() {
   }, []);
 
   const columns = [
-    { field: 'CustomerID', headerName: 'ID', width: 70 },
+    { field: "CustomerID", headerName: "ID", width: 70 },
     {
-      field: 'NAME',
-      headerName: 'Full Name',
+      field: "NAME",
+      headerName: "Full Name",
       width: 250,
       renderCell: (params) => {
         return (
@@ -30,30 +30,30 @@ export default function UserList() {
         );
       },
     },
-    { field: 'Phone_Number', headerName: 'Phone Number', width: 180 },
+    { field: "Phone_Number", headerName: "Phone Number", width: 180 },
     {
-      field: 'BIRTHDAY',
-      headerName: 'Birthday',
+      field: "BIRTHDAY",
+      headerName: "Birthday",
       width: 150,
     },
     {
-      field: 'ROLE',
-      headerName: 'Role',
+      field: "ROLE",
+      headerName: "Role",
       width: 160,
     },
     {
-      field: 'USERNAME',
-      headerName: 'User Name',
+      field: "USERNAME",
+      headerName: "User Name",
       width: 160,
     },
     {
-      field: 'action',
-      headerName: 'Action',
+      field: "action",
+      headerName: "Action",
       width: 150,
       renderCell: (params) => {
         return (
           <>
-            <Link to={'../dashboard/user/' + params.row.USERNAME}>
+            <Link to={"../dashboard/user/" + params.row.CustomerID}>
               <button className="userListEdit">Detail</button>
             </Link>
           </>

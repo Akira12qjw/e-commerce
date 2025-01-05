@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Link,
@@ -7,15 +7,15 @@ import {
   Typography,
   CardMedia,
   Button,
-} from '@mui/material';
-import './../../styles/MyOrderPage.css';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+} from "@mui/material";
+import "./../../styles/MyOrderPage.css";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 export const MyOrderPage = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
-  const customerId = JSON.parse(sessionStorage.getItem('user')).id;
+  const customerId = JSON.parse(sessionStorage.getItem("user")).id;
   useEffect(() => {
     getOrders().then((data) => {
       setOrders(data);
@@ -33,23 +33,23 @@ export const MyOrderPage = () => {
       <Stack className="my-order_detail">
         <Stack className="my-order_item" direction="row">
           <Stack>
-            <Typography>Order No {order.OrderID}</Typography>
+            <Typography>Đơn hàng số {order.OrderID}</Typography>
             <Typography>
-              <b>Order date: </b>
+              <b>Ngày đặt hàng: </b>
               {order.DATE_TIME}
             </Typography>
             <Typography>
-              <b>Estimated Delivery date: </b>
+              <b>Ngày giao hàng dự kiến: </b>
               {String(new Date())}
             </Typography>
           </Stack>
           <Stack>
             <Typography>
-              <b>Order Status:</b>{' '}
-              {order.STATUS == 0 ? 'In Progress' : 'Completed'}
+              <b>Trạng thái đơn hàng:</b>{" "}
+              {order.STATUS == 0 ? "Đang tiến hành" : "Đặt thành công"}
             </Typography>
             <Typography>
-              <b>Payment Method:</b> {order.PAY_METHOD}
+              <b>Phương thức thanh toán:</b> {order.PAY_METHOD}
             </Typography>
           </Stack>
         </Stack>
@@ -57,27 +57,26 @@ export const MyOrderPage = () => {
           <Stack className="item-detail">
             <Stack>
               <Typography>
-                <b>Customer: {order.NAME}</b>
+                <b>Tên: {order.NAME}</b>
               </Typography>
               <Typography>
-                <b>Phone:</b> {order.RECEIVE_PHONE}
+                <b>Số điện thoại:</b> {order.RECEIVE_PHONE}
               </Typography>
               <Typography>
-                <b>Address:</b> {order.RECEIVE_ADDRESS}
+                <b>Địa chỉ:</b> {order.RECEIVE_ADDRESS}
               </Typography>
               <Typography>
-                <b>Total Product:</b> {order.TOTAL_PRODUCT}
+                <b>Tổng đơn hàng:</b> {order.TOTAL_PRODUCT}
               </Typography>
               <Typography>
-                <b>Price:</b> $ {order.TOTAL_COST}
+                <b>Giá:</b> {order.TOTAL_COST} VND
               </Typography>
             </Stack>
             <Button
               variant="contained"
-              onClick={() =>
-                navigate(`/order/detail?orderID=${order.OrderID}`)
-              }>
-              View Details
+              onClick={() => navigate(`/order/detail?orderID=${order.OrderID}`)}
+            >
+              Xem chi tiết
             </Button>
           </Stack>
         </Stack>
@@ -98,7 +97,7 @@ export const MyOrderPage = () => {
             </Breadcrumbs>
           </Stack>
           <Stack className="my-order_content">
-            <Typography>My Orders</Typography>
+            <Typography>Đơn hàng của tôi</Typography>
             <Stack className="my-order_items">
               <RenderOrder />
             </Stack>

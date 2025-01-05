@@ -1,8 +1,8 @@
-import '../../styles/NewProduct.css';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Grid from '@mui/system/Unstable_Grid/Grid';
-import { useNavigate } from 'react-router-dom';
+import "../../styles/NewProduct.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Grid from "@mui/system/Unstable_Grid/Grid";
+import { useNavigate } from "react-router-dom";
 
 import {
   Input,
@@ -19,24 +19,25 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   Button,
-} from '@mui/material';
-import { MuiColorInput } from 'mui-color-input';
+} from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
 export default function NewProduct() {
   const navigate = useNavigate();
-  const [category, setCategory] = useState('');
-  const [code, setCode] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [sale, setSale] = useState('');
-  const [color1, setColor1] = useState('');
-  const [color2, setColor2] = useState('');
-  const [color3, setColor3] = useState('');
-  const [img1, setImg1] = useState('');
-  const [img2, setImg2] = useState('');
-  const [img3, setImg3] = useState('');
-  const [img4, setImg4] = useState('');
-  const [material, setMaterial] = useState('');
-  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState("");
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [creator, setCreator] = useState("");
+  const [sale, setSale] = useState("");
+  const [color1, setColor1] = useState("");
+  const [color2, setColor2] = useState("");
+  const [color3, setColor3] = useState("");
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
+  const [img3, setImg3] = useState("");
+  const [img4, setImg4] = useState("");
+  const [material, setMaterial] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleColor1 = (color1) => {
     setColor1(color1);
@@ -50,6 +51,9 @@ export default function NewProduct() {
   const handleCategory = (event) => {
     setCategory(event.target.value);
   };
+  const handleCreator = (event) => {
+    setCreator(event.target.value);
+  };
   const [sizes, setSizes] = useState(() => []);
 
   const handleSize = (event, newSizes) => {
@@ -58,15 +62,15 @@ export default function NewProduct() {
 
   const handleSubmit = () => {
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/api/products/add',
+      method: "post",
+      url: "http://localhost:8080/api/products/add",
       data: {
         CODE: code,
         NAME: name,
         CATEGORY: category,
         PRICE: price,
         SALE: sale,
-        MATERIAL: material,
+        THUONGHIEU: creator,
         DESCRIPTION: description,
         IMG: [img1, img2, img3, img4],
         SIZE: sizes,
@@ -74,10 +78,10 @@ export default function NewProduct() {
       },
     })
       .then((res) => {
-        navigate('../dashboard/products');
+        navigate("../dashboard/products");
       })
       .catch((res) => {
-        console.log('hello');
+        console.log("hello");
       });
   };
 
@@ -85,7 +89,7 @@ export default function NewProduct() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/products/categories')
+      .get("http://localhost:8080/api/products/categories")
       .then((result) => {
         console.log(result.data);
         setCategorylist(result.data);
@@ -95,19 +99,20 @@ export default function NewProduct() {
 
   return (
     <div className="newProduct">
-      <Paper elevation={3} sx={{ marginRight: '15%', marginLeft: '15%' }}>
+      <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
         <Box sx={{ padding: 5 }}>
           <Typography variant="h6" gutterBottom sx={{ paddingBottom: 5 }}>
-            New Product
+            Thêm sản mới
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 Code
               </InputLabel>
             </Grid>
@@ -128,11 +133,12 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
-                Name
+                }}
+              >
+                Tên sản phẩm
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={10}>
@@ -152,11 +158,12 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
-                Price
+                }}
+              >
+                Giá tiền
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -181,11 +188,12 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
-                Sale off
+                }}
+              >
+                Giảm giá
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -210,10 +218,11 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 Size
               </InputLabel>
             </Grid>
@@ -221,23 +230,24 @@ export default function NewProduct() {
               <ToggleButtonGroup
                 value={sizes}
                 onChange={handleSize}
-                aria-label="text formatting">
-                <ToggleButton value={'xs'} aria-label="bold">
+                aria-label="text formatting"
+              >
+                <ToggleButton value={"xs"} aria-label="bold">
                   XS
                 </ToggleButton>
-                <ToggleButton value={'s'} aria-label="bold">
+                <ToggleButton value={"s"} aria-label="bold">
                   S
                 </ToggleButton>
-                <ToggleButton value={'m'} aria-label="bold">
+                <ToggleButton value={"m"} aria-label="bold">
                   M
                 </ToggleButton>
-                <ToggleButton value={'l'} aria-label="bold">
+                <ToggleButton value={"l"} aria-label="bold">
                   L
                 </ToggleButton>
-                <ToggleButton value={'xl'} aria-label="bold">
+                <ToggleButton value={"xl"} aria-label="bold">
                   XL
                 </ToggleButton>
-                <ToggleButton value={'xxl'} aria-label="bold">
+                <ToggleButton value={"xxl"} aria-label="bold">
                   XXL
                 </ToggleButton>
               </ToggleButtonGroup>
@@ -245,65 +255,24 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
-                Color
-              </InputLabel>
-            </Grid>
-            <Grid item xs={12} sm={1}>
-              <MuiColorInput value={color1} onChange={handleColor1} />
-            </Grid>
-            <Grid item xs={12} sm={1}>
-              <MuiColorInput value={color2} onChange={handleColor2} />
-            </Grid>
-            <Grid item xs={12} sm={1}>
-              <MuiColorInput value={color3} onChange={handleColor3} />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                }}>
-                Material
-              </InputLabel>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="material"
-                name="material"
-                label="Material"
-                fullWidth
-                value={material}
-                onChange={(e) => setMaterial(e.target.value)}
-                size="small"
-                autoComplete="off"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                }}>
-                Category
+                }}
+              >
+                Loại
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
-                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <InputLabel id="demo-simple-select-label">Loại</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={category}
                   label="Category"
-                  onChange={handleCategory}>
+                  onChange={handleCategory}
+                >
                   {category_list.map((item) => (
                     <MenuItem value={item.ID}>{item.NAME}</MenuItem>
                   ))}
@@ -313,10 +282,36 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
+                Tên hãng
+              </InputLabel>
+            </Grid>
+            <Grid item xs={12} sm={10}>
+              <TextField
+                required
+                id="creator"
+                name="creator"
+                label="Tên hãng sản xuất"
+                value={creator}
+                onChange={(e) => setCreator(e.target.value)}
+                fullWidth
+                size="small"
+                autoComplete="off"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <InputLabel
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                }}
+              >
                 Image 1
               </InputLabel>
             </Grid>
@@ -337,10 +332,11 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 Image 2
               </InputLabel>
             </Grid>
@@ -361,10 +357,11 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 Image 3
               </InputLabel>
             </Grid>
@@ -385,10 +382,11 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 Image 4
               </InputLabel>
             </Grid>
@@ -409,17 +407,18 @@ export default function NewProduct() {
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                   fontWeight: 700,
-                }}>
-                Description
+                }}
+              >
+                Mô tả
               </InputLabel>
             </Grid>
             <Grid item xs={12} sm={10}>
               <TextField
                 id="outlined-multiline-static"
-                label="Description"
+                label="Mô tả"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 multiline
@@ -433,16 +432,18 @@ export default function NewProduct() {
               xs={12}
               sm={2}
               sx={{
-                justifyContent: 'right',
-              }}>
+                justifyContent: "right",
+              }}
+            >
               <Button
                 onClick={handleSubmit}
                 fullWidth
                 variant="contained"
                 sx={{
-                  color: '#fff',
-                }}>
-                Create
+                  color: "#fff",
+                }}
+              >
+                Thêm
               </Button>
             </Grid>
             <Grid item xs={12} sm={5} />

@@ -67,7 +67,7 @@ export const HomePage = ({ setLoggedIn }) => {
           onClick={() => navigate(`/product/detail?code=${product.CODE}`)}
           sx={{
             width: "100%",
-            height: "280px",
+            height: "250px",
             objectFit: "contain",
             backgroundColor: "#e3e3e3",
           }}
@@ -76,7 +76,7 @@ export const HomePage = ({ setLoggedIn }) => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ pt: 1, fontWeight: "600", fontSize: 18 }}
+            sx={{ pt: 1, fontWeight: "600", fontSize: 15 }}
           >
             {product.NAME}
           </Typography>
@@ -84,9 +84,9 @@ export const HomePage = ({ setLoggedIn }) => {
             <Typography
               variant="h6"
               component="div"
-              sx={{ fontSize: 18, fontWeight: "600" }}
+              sx={{ fontSize: 13, fontWeight: "600" }}
             >
-              $180.00
+              {product.PRICE.toLocaleString("vi-VN")} VND
             </Typography>
             <Typography
               variant="h6"
@@ -94,14 +94,14 @@ export const HomePage = ({ setLoggedIn }) => {
               sx={{
                 textDecoration: "line-through",
                 color: "#f5647d",
-                fontSize: 16,
-                lineHeight: "1.8",
+                fontSize: 15,
+                lineHeight: "1.9",
                 verticalAlign: "middle",
                 pt: 0.1,
-                ml: -4,
+                ml: 1.4,
               }}
             >
-              $210.90
+              {(product.PRICE * 1.2).toLocaleString("vi-VN")} VND
             </Typography>
             <Rating
               size="small"

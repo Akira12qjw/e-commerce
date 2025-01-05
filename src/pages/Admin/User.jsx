@@ -5,42 +5,62 @@ import {
   PermIdentity,
   PhoneAndroid,
   Publish,
-} from '@mui/icons-material';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import { Link } from 'react-router-dom';
-import '../../styles/User.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+} from "@mui/icons-material";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import { Link, useNavigate } from "react-router-dom";
+import "../../styles/User.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function User() {
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [role, setRole] = useState('');
-  const [avatar, setAvatar] = useState('');
-  const location = useLocation();
+  const path = window.location.pathname.split("/");
+  const Customerid = path[3];
+  const [id, setid] = useState(Customerid);
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [role, setRole] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:8080/api/users/detailuser?username=${
-          location.pathname.split('/')[3]
-        }`
-      )
+      .get(`http://localhost:8080/api/users/detailuser?id=${Customerid}`)
       .then((result) => {
-        setPhone(result.data[0]['Phone_Number']);
-        setName(result.data[0]['NAME']);
-        setUsername(result.data[0]['USERNAME']);
-        setPassword(result.data[0]['PASSWORD']);
-        setBirthday(result.data[0]['BIRTHDAY']);
-        setRole(result.data[0]['ROLE']);
-        setAvatar(result.data[0]['AVATAR']);
+        setPhone(result.data[0]["Phone_Number"]);
+        setName(result.data[0]["NAME"]);
+        setUsername(result.data[0]["USERNAME"]);
+        setPassword(result.data[0]["PASSWORD"]);
+        setBirthday(result.data[0]["BIRTHDAY"]);
+        setRole(result.data[0]["ROLE"]);
+        setAvatar(result.data[0]["AVATAR"]);
       })
       .catch((error) => console.log(error));
-  }, [location.pathname]);
-
+  }, []);
+  const handleEdit = () => {
+    axios({
+      method: "post",
+      url: "http://localhost:8080/api/users/edit",
+      data: {
+        ID: id,
+        USERNAME: username,
+        NAME: name,
+        PHONE: phone,
+        PASSWORD: password,
+        BIRTHDAY: birthday,
+        AVATAR: avatar,
+      },
+    })
+      .then((res) => {
+        navigate("../dashboard/users");
+      })
+      .catch((res) => {
+        console.log("error", res);
+      });
+  };
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -84,11 +104,20 @@ export default function User() {
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
+                <label>ID</label>
+                <input
+                  type="text"
+                  value={id}
+                  disabled
+                  className="userUpdateInput"
+                />
+              </div>
+              <div className="userUpdateItem">
                 <label>Username</label>
                 <input
                   type="text"
                   value={username}
-                  disabled
+                  onChange={(e) => setUsername(e.target.value)}
                   className="userUpdateInput"
                 />
               </div>
@@ -98,16 +127,16 @@ export default function User() {
                   type="text"
                   value={name}
                   className="userUpdateInput"
-                  disabled
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Password</label>
+                <label>Birthday</label>
                 <input
-                  type="password"
-                  value={password}
+                  type="date"
+                  value={birthday}
                   className="userUpdateInput"
-                  disabled
+                  onChange={(e) => setBirthday(e.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
@@ -116,7 +145,7 @@ export default function User() {
                   type="text"
                   value={phone}
                   className="userUpdateInput"
-                  disabled
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
             </div>
@@ -124,7 +153,9 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img className="userUpdateImg" src={avatar} alt="" />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button onClick={handleEdit} className="userUpdateButton">
+                Update
+              </button>
             </div>
           </form>
         </div>

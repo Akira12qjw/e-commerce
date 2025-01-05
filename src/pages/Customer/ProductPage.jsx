@@ -165,11 +165,19 @@ export const ProductPage = () => {
             {product.NAME}
           </Typography>
           <Stack>
-            <Typography variant="h6" component="div">
-              ${product.PRICE}
+            <Typography
+              variant="h6"
+              sx={{ fontSize: 13, ml: 1 }}
+              component="div"
+            >
+              {product.PRICE.toLocaleString("vi-VN")} VND
             </Typography>
-            <Typography variant="h6" component="div">
-              ${product.PRICE * 1.2}
+            <Typography
+              variant="h6"
+              sx={{ fontSize: 13, ml: 6 }}
+              component="div"
+            >
+              {(product.PRICE * 1.2).toLocaleString("vi-VN")} VND
             </Typography>
             <Rating
               size="small"
@@ -212,61 +220,6 @@ export const ProductPage = () => {
             </RadioGroup>
           </AccordionDetails>
         </Accordion>
-        <Divider />
-
-        <Accordion elevation={0} defaultExpanded={true}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Size</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <ToggleButtonGroup
-              value={size}
-              exclusive
-              onChange={handleSize}
-              aria-label="size"
-            >
-              {["S", "M", "L", "XL", "XXL"].map((text) => (
-                <ToggleButton value={text} aria-label={text} disableRipple>
-                  {text}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-          </AccordionDetails>
-        </Accordion>
-        <Divider />
-        <Accordion elevation={0} defaultExpanded={true}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Price</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <RadioGroup>
-              {[
-                "Nhỏ hơn 300.000",
-                "Từ 300.000 - 500.000",
-                "Lớn hơn 500.000",
-              ].map((text, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={index}
-                  label={text}
-                  control={<Radio />}
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                />
-              ))}
-            </RadioGroup>
-          </AccordionDetails>
-        </Accordion>
-        <Button
-          variant="contained"
-          size="large"
-          endIcon={<FilterAltIcon />}
-          sx={{ width: "100%", mt: 3, backgroundColor: "black" }}
-          onClick={() => handleFilter()}
-        >
-          Filter
-        </Button>
       </React.Fragment>
     );
   };
